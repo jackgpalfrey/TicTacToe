@@ -12,12 +12,9 @@ pygame.display.set_caption("TicTacToe")
 class Grid():
     def __init__(self,win,width,height,xOffset,yOffset):
         self.win = win
-        self.default = Color.LIGHT_GREY
-        self.player1 = Color.PINK
-        self.player2 = Color.TURQUOISE
-        self.grid = [[self.default,self.default,self.default]
-                    ,[self.default,self.default,self.default]
-                    ,[self.default,self.default,self.default]]
+        self.grid = [[Color.LIGHT_GREY,Color.LIGHT_GREY,Color.LIGHT_GREY]
+                    ,[Color.LIGHT_GREY,Color.LIGHT_GREY,Color.LIGHT_GREY]
+                    ,[Color.LIGHT_GREY,Color.LIGHT_GREY,Color.LIGHT_GREY]]
 
         self.width = width
         self.height = height
@@ -28,24 +25,13 @@ class Grid():
         self.turns = 0
 
 
-    def getPlayer(self,row,col):
-        color = self.grid[row][col]
-        player = 0
-        if color == self.player1: player = 1
-        elif color == self.player2: player = 2
+    def getColor(self,row,col):
+        return self.grid[row][col]
 
-        return player
-
-    def changeState(self,row,col,player):
-        color = self.default
-        if player == 1: color = self.player1
-        elif player == 2: color = self.player2
-        self.grid[row][col] = color
+    def changeState(self,row,col,val):
+        self.grid[row][col] = val
 
     def reset(self):
-        self.grid = [[self.default,self.default,self.default]
-                    ,[self.default,self.default,self.default]
-                    ,[self.default,self.default,self.default]]
         self.turns = 0
 
     def findPos(self,pos):
@@ -73,7 +59,7 @@ class Grid():
 
 
     def winLogic(self,winFunc):
-        players = [self.player1,self.player2]
+        players = [Color.RED,Color.BLUE]
         for color in players:
             if self.grid[0][0] == color and self.grid[0][1] == color and self.grid[0][2] == color: return winFunc(self.win,color)
             elif self.grid[1][0] == color and self.grid[1][1] == color and self.grid[1][2] == color: return winFunc(self.win,color)
@@ -84,7 +70,7 @@ class Grid():
             elif self.grid[0][0] == color and self.grid[1][1] == color and self.grid[2][2] == color: return winFunc(self.win,color)
             elif self.grid[2][0] == color and self.grid[1][1] == color and self.grid[0][2] == color: return winFunc(self.win,color)
 
-            elif self.grid[0][0] != self.default and self.grid[0][1] != self.default and self.grid[0][2] != self.default and self.grid[1][0] != self.default and self.grid[1][1] != self.default and self.grid[1][2] != self.default and self.grid[2][0] != self.default and self.grid[2][1] != self.default and self.grid[2][2] != self.default: win(self.win,self.default) 
+            elif self.grid[0][0] != Color.LIGHT_GREY and self.grid[0][1] != Color.LIGHT_GREY and self.grid[0][2] != Color.LIGHT_GREY and self.grid[1][0] != Color.LIGHT_GREY and self.grid[1][1] != Color.LIGHT_GREY and self.grid[1][2] != Color.LIGHT_GREY and self.grid[2][0] != Color.LIGHT_GREY and self.grid[2][1] != Color.LIGHT_GREY and self.grid[2][2] != Color.LIGHT_GREY: win(self.win,Color.LIGHT_GREY) 
             
 
 
@@ -104,10 +90,20 @@ def win(win,color):
     time.sleep(0.3)
     grid = Grid(win,600,600,0,0)
     return
+    # while winrun:
+    #     print("TEST")
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.QUIT:
+    #             pygame.quit()
+    #             break
+    #         if event.type == pygame.KEYDOWN:
+    #             if event.key == pygame.K_ESCAPE:
+    #                 print("G")
+    #                 grid = Grid(win,600,600,0,0)
+    #                 winrun = False
 
 
-
-player1 = True
+playerR = True
 
 
 running = True
@@ -123,13 +119,13 @@ while running:
         elif pygame.mouse.get_pressed()[0]:
             pos = pygame.mouse.get_pos()
             row,col = grid.findPos(pos)
-            if grid.getPlayer(int(row),int(col)) == 0:
-                if player1:
-                    grid.changeState(int(row),int(col),1)
+            if grid.getColor(int(row),int(col)) == Color.LIGHT_GREY:
+                if playerR:
+                    grid.changeState(int(row),int(col),Color.RED)
                 else:
-                    grid.changeState(int(row),int(col),2)
+                    grid.changeState(int(row),int(col),Color.BLUE)
                 
-                player1 = not player1
+                playerR = not playerR
 
         
 pygame.quit()
