@@ -55,7 +55,7 @@ class Grid():
         self.grid[row][col] = color
 
     def reset(self):
-        self.grid = self.createGrid(self.gridSize)
+        self.grid = self.createGrid(self.gridSizes)
 
     def findPos(self,pos):
         x,y = pos
