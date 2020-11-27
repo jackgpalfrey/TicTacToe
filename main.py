@@ -15,17 +15,29 @@ class Grid():
         self.default = Color.LIGHT_GREY
         self.player1 = Color.PINK
         self.player2 = Color.TURQUOISE
-        self.grid = [[self.default,self.default,self.default]
-                    ,[self.default,self.default,self.default]
-                    ,[self.default,self.default,self.default]]
-
         self.width = width
         self.height = height
         self.xOffset = xOffset
         self.yOffset = yOffset
-        self.xNodeSize = width / 3
-        self.yNodeSize = height / 3
         self.turns = 0
+        self.gridSize = 4
+
+
+        self.grid = self.createGrid(self.gridSize)
+
+    def createGrid(self,size):
+        grid = []
+
+        for i in range(size):
+            grid.append([])
+            for y in range(size):
+                grid[i].append(self.default)
+        
+        self.size = size
+        self.xNodeSize = self.width / size
+        self.yNodeSize = self.height / size
+        self.grid = grid
+        return self.grid
 
 
     def getPlayer(self,row,col):
@@ -43,10 +55,7 @@ class Grid():
         self.grid[row][col] = color
 
     def reset(self):
-        self.grid = [[self.default,self.default,self.default]
-                    ,[self.default,self.default,self.default]
-                    ,[self.default,self.default,self.default]]
-        self.turns = 0
+        self.grid = self.createGrid(self.gridSize)
 
     def findPos(self,pos):
         x,y = pos
@@ -73,18 +82,52 @@ class Grid():
 
 
     def winLogic(self,winFunc):
-        players = [self.player1,self.player2]
-        for color in players:
-            if self.grid[0][0] == color and self.grid[0][1] == color and self.grid[0][2] == color: return winFunc(self.win,color)
-            elif self.grid[1][0] == color and self.grid[1][1] == color and self.grid[1][2] == color: return winFunc(self.win,color)
-            elif self.grid[2][0] == color and self.grid[2][1] == color and self.grid[2][2] == color: return winFunc(self.win,color)
-            elif self.grid[0][0] == color and self.grid[1][0] == color and self.grid[2][0] == color: return winFunc(self.win,color)
-            elif self.grid[0][1] == color and self.grid[1][1] == color and self.grid[2][1] == color: return winFunc(self.win,color)
-            elif self.grid[0][2] == color and self.grid[1][2] == color and self.grid[2][2] == color: return winFunc(self.win,color)
-            elif self.grid[0][0] == color and self.grid[1][1] == color and self.grid[2][2] == color: return winFunc(self.win,color)
-            elif self.grid[2][0] == color and self.grid[1][1] == color and self.grid[0][2] == color: return winFunc(self.win,color)
+        playerColors = [self.player1,self.player2] 
 
-            elif self.grid[0][0] != self.default and self.grid[0][1] != self.default and self.grid[0][2] != self.default and self.grid[1][0] != self.default and self.grid[1][1] != self.default and self.grid[1][2] != self.default and self.grid[2][0] != self.default and self.grid[2][1] != self.default and self.grid[2][2] != self.default: win(self.win,self.default) 
+        for playerColor in playerColors:
+            rowPoints = []
+            colPoints = []
+            for x in range(self.size):
+                rowPoints.append(0)
+                colPoints.append(0)
+            
+            diagPointsL = 0
+            diagPointsR = 0
+            for row in range(self.size):
+                for col in range(self.size):
+                    node = self.grid[row][col]
+                    if node == playerColor:
+                        colPoints[row] += 1
+                        rowPoints[col] += 1
+
+
+                        if row == self.size - 1 - col:
+                            diagPointsR += 1
+                        if row == col:
+                            diagPointsL += 1
+                    
+
+
+
+            #print(diagPoints)
+            for points in rowPoints:
+                if points == self.size: win(self.win,playerColor)
+            for points in colPoints:
+                if points == self.size: win(self.win,playerColor)
+            if diagPointsL == self.size: win(self.win,playerColor)
+            if diagPointsR == self.size: win(self.win,playerColor)
+
+
+        full = 0         
+        for row in range(len(self.grid)):
+            for col in range(len(self.grid[row])):
+                node = self.grid[row][col]
+                if node != self.default:
+                    full += 1
+
+        if full == (self.size ** 2):
+            win(self.win,self.default)
+         
             
 
 
