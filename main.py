@@ -4,12 +4,14 @@ from Utils.RGBcolors import AllColors as Color
 import time
 
 # Window Settings
-WIDTH = 600
-HEIGHT = 600
+WIDTH = 800
+HEIGHT = 800
 
 # Window Setup
 win = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption("TicTacToe")
+programIcon = pygame.image.load('icon.png')
+pygame.display.set_icon(programIcon)
 
 
 class Grid():
@@ -194,7 +196,7 @@ class Grid():
 
 
 # Creates Grid Object and prepares surface
-grid = Grid(win,600,600,0,0)
+grid = Grid(win,800,800,0,0)
 win.fill(Color.WHITE)
 pygame.display.update()
 
