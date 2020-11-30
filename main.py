@@ -67,7 +67,7 @@ class Grid():
 
         Args:
             row (int): Row position
-            col (nt): Collumn postion
+            col (int): Collumn postion
 
         Returns:
             int: 0 = Default (No Player), 1 = Player 1, 2 = Player 2
