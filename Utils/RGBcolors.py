@@ -19,3 +19,8 @@ class AllColors(Shades,BaseColors):
     TURQUOISE = (64,224,208)
     BROWN = (150,75,0)
     PINK = (255,192,203)
+    TEAL = (80,127,145)
+    SKY_BLUE = (116,179,206)
+    DARK_GREEN = (0,67,70)
+    WARM_RED = (214,64,69)
+    

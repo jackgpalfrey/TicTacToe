@@ -37,7 +37,7 @@ class Grid():
         self.gridSize = 3 # Number of Squares in grid on an axis  - Full number of squares is n**2
 
 
-        self.grid = self.createGrid(self.gridSize) # Creates grid data structure
+        self.reset() # Creates grid data structure
 
     def createGrid(self,size):
         """ Creates Grid Data Structure id 2d Array
@@ -98,6 +98,7 @@ class Grid():
     def reset(self):
         """ Resets back to empty grid
         """
+        self.win.fill(Color.WHITE)
         self.grid = self.createGrid(self.gridSize)
 
     def findPos(self,pos):
@@ -191,16 +192,11 @@ class Grid():
         if full == (self.size ** 2):
             win(self.win,self.default)
          
-            
-
-
 
 # Creates Grid Object and prepares surface
 grid = Grid(win,800,800,0,0)
-win.fill(Color.WHITE)
+
 pygame.display.update()
-
-
 
 
 def win(win,color):
@@ -220,9 +216,7 @@ def win(win,color):
     return
 
 
-
 player1 = True # Sets whos turn it is to player 1
-
 
 running = True
 while running:   
