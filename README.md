@@ -4,3 +4,4 @@
 
 ## Keybinds:
 - Left Click: Claims Square
+
