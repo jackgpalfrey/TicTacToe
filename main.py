@@ -96,7 +96,7 @@ class Grid():
     def reset(self):
         """ Resets back to empty grid
         """
-        self.grid = self.createGrid(self.gridSizes)
+        self.grid = self.createGrid(self.gridSize)
 
     def findPos(self,pos):
         """ Get Row, Col posiiton in grid
@@ -214,7 +214,7 @@ def win(win,color):
     pygame.display.update()
 
     time.sleep(0.3) # Waits .3 seconds
-    grid = Grid(win,600,600,0,0) # Resets Grid
+    grid.reset() # Resets Grid
     return
 
 
@@ -232,6 +232,12 @@ while running:
         if event.type == pygame.QUIT:
             running = False
             break
+            
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE: 
+                grid.reset()
+                
+            
         
         # Manages Click Event 
         elif pygame.mouse.get_pressed()[0]:
