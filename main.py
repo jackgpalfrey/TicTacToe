@@ -7,6 +7,7 @@ import time
 WIDTH = 800
 HEIGHT = 800
 
+
 # Window Setup
 win = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption("TicTacToe")
@@ -192,10 +193,8 @@ class Grid():
         if full == (self.size ** 2):
             win(self.win,self.default)
          
-
 # Creates Grid Object and prepares surface
-grid = Grid(win,800,800,0,0)
-
+grid = Grid(win,800,800,0,0,)
 pygame.display.update()
 
 
