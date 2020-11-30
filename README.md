@@ -7,4 +7,5 @@
 
 
 ---
-![Icon](./DevelopmentAssets/icon480x480.png)
+## Icon:
+> ![Icon](./DevelopmentAssets/icon480x480.png)
