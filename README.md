@@ -6,5 +6,5 @@
 - Left Click: Claims square
 
 
-
-![image](./DevelopmentAssets/icon480x480.png)
+---
+![Icon](./DevelopmentAssets/icon480x480.png)
