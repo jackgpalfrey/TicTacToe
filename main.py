@@ -4,12 +4,11 @@ from Utils.RGBcolors import AllColors as Color
 import time
 
 # Window Settings
-WIDTH = 800
-HEIGHT = 800
-
+WIDTH = 750
+HEIGHT = 775
 
 # Window Setup
-win = pygame.display.set_mode((WIDTH,HEIGHT))
+window = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption("TicTacToe")
 programIcon = pygame.image.load('icon.png')
 pygame.display.set_icon(programIcon)
@@ -75,7 +74,10 @@ class Grid():
         Returns:
             int: 0 = Default (No Player), 1 = Player 1, 2 = Player 2
         """
-        color = self.grid[row][col]
+        try:
+            color = self.grid[row][col]
+        except:
+            return False
         player = 0
         if color == self.player1: player = 1
         elif color == self.player2: player = 2
@@ -129,10 +131,10 @@ class Grid():
                 yPos = self.yOffset + (self.yNodeSize * col)
                 pygame.draw.rect(self.win, color, (xPos,yPos,self.xNodeSize,self.yNodeSize))
 
-        for row in range(len(self.grid) + 1):
+        for row in range(1,len(self.grid)):
             xPos = self.xOffset + (self.xNodeSize * row)
             pygame.draw.line(self.win,Color.BLACK,(xPos, self.yOffset),(xPos, self.yOffset + self.height))
-        for col in range(len(self.grid[1]) + 1):
+        for col in range(1,len(self.grid[1])):
             yPos = self.yOffset + (self.yNodeSize * col)
             pygame.draw.line(self.win,Color.BLACK,(self.xOffset, yPos),(self.xOffset + self.width, yPos))
 
@@ -194,7 +196,7 @@ class Grid():
             win(self.win,self.default)
          
 # Creates Grid Object and prepares surface
-grid = Grid(win,800,800,0,0,)
+grid = Grid(window,750,750,0,0,)
 pygame.display.update()
 
 
@@ -219,7 +221,12 @@ player1 = True # Sets whos turn it is to player 1
 
 running = True
 while running:   
+    if player1:
+        playerColor = grid.player1
+    else:
+        playerColor = grid.player2
     grid.draw() # Draws Grid
+    pygame.draw.rect(window, playerColor, (0,WIDTH,WIDTH,25))
     pygame.display.update()
     grid.winLogic(win) # Checks if any player has won
     for event in pygame.event.get():
@@ -238,13 +245,16 @@ while running:
         elif pygame.mouse.get_pressed()[0]:
             pos = pygame.mouse.get_pos() # Gets tuple mouse position
             row,col = grid.findPos(pos) # Gets row col position of click
-            if grid.getPlayer(int(row),int(col)) == 0: # Checks if grid position is empty
-                if player1: # Checks if its player 1 turn
-                    grid.changeState(int(row),int(col),1) # Sets node to Player 1 color
-                else: # If not its player 2's turn
-                    grid.changeState(int(row),int(col),2) # Sets node to player 2 color
+            try:
+                if grid.getPlayer(int(row),int(col)) == 0: # Checks if grid position is empty
+                    if player1: # Checks if its player 1 turn
+                        grid.changeState(int(row),int(col),1) # Sets node to Player 1 color
+                    else: # If not its player 2's turn
+                        grid.changeState(int(row),int(col),2) # Sets node to player 2 color
+            except:
+                pass
                 
-                player1 = not player1 # Toggles player 1
+            player1 = not player1 # Toggles player 1
 
         
 pygame.quit()
