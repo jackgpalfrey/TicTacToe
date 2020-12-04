@@ -227,6 +227,7 @@ while running:
         playerColor = grid.player2
     grid.draw() # Draws Grid
     pygame.draw.rect(window, playerColor, (0,WIDTH,WIDTH,25))
+    pygame.draw.line(window,Color.BLACK,(0, grid.height),(WIDTH, grid.height))
     pygame.display.update()
     grid.winLogic(win) # Checks if any player has won
     for event in pygame.event.get():
@@ -249,12 +250,14 @@ while running:
                 if grid.getPlayer(int(row),int(col)) == 0: # Checks if grid position is empty
                     if player1: # Checks if its player 1 turn
                         grid.changeState(int(row),int(col),1) # Sets node to Player 1 color
+                        player1 = not player1 # Toggles player 1
                     else: # If not its player 2's turn
                         grid.changeState(int(row),int(col),2) # Sets node to player 2 color
+                        player1 = not player1 # Toggles player 1
             except:
                 pass
                 
-            player1 = not player1 # Toggles player 1
+             
 
         
 pygame.quit()
